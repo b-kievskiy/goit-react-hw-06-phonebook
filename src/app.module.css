@@ -1,0 +1,21 @@
+.header {  
+display: flex;
+justify-content: space-between;
+width: 430px;
+padding: 0 6px;
+}
+
+.title {
+  color: #3645ab;
+  transition: all 200ms ease;
+}
+
+.alarm {
+  margin: 20px 0;
+  padding: 10px 40px;
+  color: #fff;
+  background-color: #f1392d;
+  border: 1px solid #f1392d;
+  border-radius: 6px;
+  cursor: pointer;
+}
