@@ -1,36 +1,37 @@
-import React, { Component } from 'react';
-import { uuid } from 'uuidv4';
-import PropTypes from 'prop-types';
-import styles from './form.module.css';
+import React, { Component } from "react";
+import { uuid } from "uuidv4";
+import PropTypes from "prop-types";
+import styles from "./form.module.css";
+import { contactsAddAction } from "../redux/phonebookAction";
 
 export class Form1 extends Component {
   state = {
-    name: '',
-    number: '',
+    name: "",
+    number: "",
   };
 
-  handlerSubmit = e => {
+  handlerSubmit = (e) => {
     e.preventDefault();
     const { name, number } = this.state;
     const newUser = { id: uuid(), name, number };
 
-    const isName = this.props.contacts.find(contact => name === contact.name);
+    const isName = this.props.contacts.find((contact) => name === contact.name);
     if (isName) {
       this.props.setAlarm();
-      this.setState(prev => ({
-        name: '',
-        number: '',
+      this.setState((prev) => ({
+        name: "",
+        number: "",
       }));
       return;
     }
-    this.props.contactsAddAction(newUser);
+    contactsAddAction(newUser);
     this.setState({
-      name: '',
-      number: '',
+      name: "",
+      number: "",
     });
   };
 
-  handlerOnChange = e => {
+  handlerOnChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -69,7 +70,6 @@ export class Form1 extends Component {
 }
 
 Form1.propTypes = {
-  contactsAddAction: PropTypes.func.isRequired,
   setAlarm: PropTypes.func.isRequired,
   contacts: PropTypes.array.isRequired,
 };

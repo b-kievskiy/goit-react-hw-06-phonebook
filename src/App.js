@@ -1,18 +1,13 @@
-import React, { Component } from 'react';
-import ContactsList from './ContactsList/ContactsList';
-import { CSSTransition } from 'react-transition-group';
-import { connect } from 'react-redux';
-import { Form1 } from './Form/Form1';
-import Filter from './Filter/Filter';
-import styles from './app.module.css';
-import slideTransition from './transitions/slide.module.css';
+import React, { Component } from "react";
+import ContactsList from "./ContactsList/ContactsList";
+import { CSSTransition } from "react-transition-group";
+import { connect } from "react-redux";
+import { Form1 } from "./Form/Form1";
+import Filter from "./Filter/Filter";
+import styles from "./app.module.css";
+import slideTransition from "./transitions/slide.module.css";
 // import alarmTransition from './transitions/apear.module.css';
-import alarmTransition from './transitions/slideright.module.css';
-import {
-  filterSetAction,
-  contactsAddAction,
-  contactsDeleteAction,
-} from './redux/phonebookAction';
+import alarmTransition from "./transitions/slideright.module.css";
 
 class App extends Component {
   state = {
@@ -49,12 +44,11 @@ class App extends Component {
   render() {
     const filter = this.props.filter;
     const contacts = this.props.contacts;
-    const {filterSetAction, contactsAddAction, contactsDeleteAction} = this.props;
     // -= =-
     const { isShow, isAlarm } = this.state;
 
-    const filteredContacts = contacts.filter(contact =>
-      contact.name.toUpperCase().includes(filter.toUpperCase()),
+    const filteredContacts = contacts.filter((contact) =>
+      contact.name.toUpperCase().includes(filter.toUpperCase())
     );
     return (
       <>
@@ -63,50 +57,35 @@ class App extends Component {
             in={isShow}
             timeout={500}
             classNames={slideTransition}
-            unmountOnExit>
+            unmountOnExit
+          >
             <h1 className={styles.title}>Phonebook</h1>
           </CSSTransition>
           <CSSTransition
             in={isAlarm}
             timeout={250}
             classNames={alarmTransition}
-            unmountOnExit>
+            unmountOnExit
+          >
             <div onClick={this.hideAlarm} className={styles.alarm}>
               Contact already exist!
             </div>
           </CSSTransition>
         </div>
-        <Form1
-          contacts={contacts}
-          contactsAddAction={contactsAddAction}
-          setAlarm={this.setAlarm}
-        />
+        <Form1 contacts={contacts} setAlarm={this.setAlarm} />
         <h2>Contacts</h2>
-        <Filter
-        filter={filter} 
-        contacts={contacts}
-        filterSetAction={filterSetAction}
-        />
-        <ContactsList
-          filteredContacts={filteredContacts}
-          contactsDeleteAction={contactsDeleteAction}
-        />
+        <Filter filter={filter} contacts={contacts} />
+        <ContactsList filteredContacts={filteredContacts} />
       </>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     contacts: state.contacts,
     filter: state.filter,
   };
 };
 
-const mapDipatchToProps = {
-  filterSetAction,
-  contactsAddAction,
-  contactsDeleteAction,
-};
-
-export default connect(mapStateToProps, mapDipatchToProps)(App);
+export default connect(mapStateToProps)(App);
